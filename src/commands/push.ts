@@ -1,5 +1,10 @@
 import { Command, flags } from '@oclif/command'
 import { Octokit } from "@octokit/core";
+import { Configuration } from '../core/models/configuration';
+import * as FileUtil from '../core/utils/file-util'
+import * as fs from 'fs';
+import Config from './config';
+import { env } from 'process';
 export default class Push extends Command {
   static description = 'describe the command here'
 
@@ -18,8 +23,13 @@ export default class Push extends Command {
     const { args, flags } = this.parse(Push)
 
     const name = flags.name ?? 'world'
-    this.log(`hello ${name} from C:\\Users\\pc\\mygit\\src\\commands\\push.ts` + args.public);
-    this.log("mamiya");
+
+    const config: Configuration = FileUtil.readJsonFileSync(Config.readConfigFilePath());
+    if (!config.token) {
+      if (!config.username)
+        config.username = require("os").userInfo().username;
+      this.error('well what the hell I am supposed to do without your github token,' + config.username + " you ignorant slut");
+    }
 
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)

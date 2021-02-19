@@ -28,9 +28,26 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`mygit config [FILE]`](#mygit-config-file)
 * [`mygit hello [FILE]`](#mygit-hello-file)
 * [`mygit help [COMMAND]`](#mygit-help-command)
 * [`mygit push [FILE]`](#mygit-push-file)
+
+## `mygit config [FILE]`
+
+describe the command here
+
+```
+USAGE
+  $ mygit config [FILE]
+
+OPTIONS
+  -f, --force
+  -h, --help       show CLI help
+  -n, --name=name  name to print
+```
+
+_See code: [src/commands/config.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/config.ts)_
 
 ## `mygit hello [FILE]`
 
@@ -81,6 +98,7 @@ OPTIONS
   -f, --force
   -h, --help       show CLI help
   -n, --name=name  name to print
+  -p, --public
 ```
 
 _See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
