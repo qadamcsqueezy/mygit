@@ -50,8 +50,8 @@ export class GitService {
     }
     push(project: Project) {
         let commande: string = "cd " + project.path + " && git push";
-        // if (!project.isPushedBefore)
-        commande += " -u " + project.remote + " " + project.branch;
+        if (project.remote_url)
+            commande += " -u " + project.remote + " " + project.branch;
 
         return child_process.execSync(commande).toString();
 

@@ -56,26 +56,6 @@ OPTIONS
 
 _See code: [src/commands/config.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/config.ts)_
 
-## `mygit hello [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ mygit hello [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-
-EXAMPLE
-  $ mygit hello
-  hello world from ./src/hello.ts!
-```
-
-_See code: [src/commands/hello.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/hello.ts)_
-
 ## `mygit help [COMMAND]`
 
 display help for mygit
