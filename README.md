@@ -1,7 +1,6 @@
-mygit
-=====
+# mygit
 
-automate git bash commands
+create github repositories and automate git bash commands
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/mygit.svg)](https://npmjs.org/package/mygit)
@@ -9,11 +8,15 @@ automate git bash commands
 [![License](https://img.shields.io/npm/l/mygit.svg)](https://github.com/QADA99/mygit/blob/master/package.json)
 
 <!-- toc -->
-* [Usage](#usage)
-* [Commands](#commands)
+
+- [Usage](#usage)
+- [Commands](#commands)
 <!-- tocstop -->
+
 # Usage
+
 <!-- usage -->
+
 ```sh-session
 $ npm install -g mygit
 $ mygit COMMAND
@@ -25,13 +28,17 @@ USAGE
   $ mygit COMMAND
 ...
 ```
+
 <!-- usagestop -->
+
 # Commands
+
 <!-- commands -->
-* [`mygit config [FILE]`](#mygit-config-file)
-* [`mygit hello [FILE]`](#mygit-hello-file)
-* [`mygit help [COMMAND]`](#mygit-help-command)
-* [`mygit push [FILE]`](#mygit-push-file)
+
+- [`mygit config [FILE]`](#mygit-config-file)
+- [`mygit hello [FILE]`](#mygit-hello-file)
+- [`mygit help [COMMAND]`](#mygit-help-command)
+- [`mygit push [FILE]`](#mygit-push-file)
 
 ## `mygit config [FILE]`
 
@@ -102,4 +109,5 @@ OPTIONS
 ```
 
 _See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
+
 <!-- commandsstop -->

@@ -8,8 +8,7 @@ export default class Config extends Command {
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
-    force: flags.boolean({ char: 'f' }),
+    force: flags.boolean({ char: 'f', description: 'force to change configuration file path' }),
   }
 
   static args = [{ name: 'path', required: true, description: 'absolute path to the configuration file' }]

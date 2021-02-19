@@ -1,9 +1,11 @@
 export class Project {
     name: string;
     path: string;
-    isInit: boolean;
-    isCommited: boolean;
-    isPushed: boolean;
+    remote: string = "origin";
+    privateRepo: boolean = true;
+    remote_url: string;
+    branch: string = "master";
+    isPushedBefore: boolean;
     commitMessage: string;
     hasLiscence: boolean;
     hasGitIgnore: boolean;
