@@ -1,6 +1,6 @@
 # mygit
 
-create github repositories and automate git bash commands
+Create github repositories and Automate git bash commands from command line
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/mygit.svg)](https://npmjs.org/package/mygit)
@@ -9,9 +9,41 @@ create github repositories and automate git bash commands
 
 <!-- toc -->
 
+- [Motivation](#motivation)
+- [Feature](#feature)
+- [Requirements](#rerquirements)
 - [Usage](#usage)
 - [Commands](#commands)
+- [Errors](#errors)
+- [License](#license)
 <!-- tocstop -->
+
+<!-- motivation -->
+
+# Motivation
+
+Sometimes you just want to put your local directory in github without going to the browser .
+_"So me think why wast time do lot commands, when one command do trick"_
+
+<!-- motivationstop -->
+
+# Feature
+
+<!-- feature -->
+
+The following are the key features of Mygit in a nutshell:
+
+- Create a new repository on GitHub from the Command
+- Automate Git commands
+- Automatically add README.md, LICENSE, .gitignore
+<!-- featurestop -->
+
+# Requirements
+
+<!-- rerquirements -->
+
+- [**Node.js** `v8`](https://nodejs.org/en/download/) or higher must be installed to run this program
+- [**git**](https://git-scm.com/downloads) must be installed to run git commands
 
 # Usage
 
@@ -37,20 +69,51 @@ running command...
 
 ## `mygit config [PATH]`
 
-set the location of configuration file
+Set the location of configuration file
 
 ```
 USAGE
   $ mygit config [PATH]
 
 OPTIONS
-  -f, --force     f orce to change the configuration file path
+  -f, --force     force to change the configuration file path
   -h, --help       show CLI help
 ```
 
-_See code: [src/commands/config.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/config.ts)_
+In order to put your project up on GitHub , you need to provide configuration file with your github Personal access tokens with at least public_repo scope or repo scope . Read more about github token and how to create one [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) .
 
-## `mygit push [FILE]`
+Here's an example of a configuration file :
+
+```json
+{
+  "token": "Put your token here",
+  "username": "QADA99",
+  "IsPrivate": true,
+  "default_commit_message": "pippity poppity give me the zoppity",
+  "always_add_readme": true,
+  "always_add_license": false,
+  "always_add_gitignore": false
+}
+```
+
+Make sure to put it somewhere safe then run
+
+```
+ $ mygit config pathToTheFile -f
+
+```
+
+Your token is only used to communicate with github Api . to make the request I used this Amazing Extendable client for GitHub's REST [Octokit](https://github.com/octokit/core.js) .
+
+_See code: [src/core/services/github.service.ts](https://github.com/QADA99/mygit/blob/master/src/core/services/github.service.ts)_
+
+The Image below shows how mygit works :
+
+![alt text](./mygit.png?raw=true)
+
+_See code: [src/commands/config.ts](https://github.com/QADA99/mygit/blob/master/src/commands/config.ts)_
+
+## `mygit push [DIRECTORY] [MESSAGE]`
 
 Automate the process of pushing/creating the code to github repository
 
@@ -66,6 +129,53 @@ OPTIONS
   -p, --public     create public repository
   -r, --readme     add readme
 ```
+
+Both arguments ( DIRECTORY and MESSAGE ) could be optional .
+
+```
+Example 1
+  $ mygit push my-directory "inital commit"
+```
+
+In this example mygit will check if there's a directory with the same name (if not it will create one) and run the fallowing git commands in my-directory
+
+```sh-session
+$ git init # if my-directory is not a Git repository
+$ git add .
+$ git commit "intial commit"
+```
+
+Afterwards mygit will check if git remote exists before push , if no will create a Repository in Github with the same name of your directory. the visibility of the new Repository will depends on your configuration and if you specify -p flag, -p stands for public.
+
+After that mygit will run git push . the sequence of those operations depends on your configuration and if you use flags (-r , -g , -l) .
+
+```
+Example 2
+  $ mygit push . "inital commit"
+```
+
+To run mygit in the current repository just type . , or type only the commit message or don't type at all :
+
+```
+Example 3
+  $ mygit push 'initial commit'
+```
+
+In this example mygit will take the current directory as the working directory. but make sure that there's no directory with name of your message . otherwise it will be taken as the working directory and the commit message will be the default message.
+
+```
+Example 4
+  $ mygit push
+```
+
+If you run mygit without arguments , it will take the current directory as the working directory and the default commit message from the configuration file.
+
+```
+Example 5
+  $ mygit push my-directory
+```
+
+If no message provided . mygit will take the default commit message from configuration file.
 
 _See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
 
@@ -87,3 +197,18 @@ OPTIONS
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
 <!-- commandsstop -->
+<!-- errors -->
+
+# Errors
+
+If something goes wrong just try to pretend like none of it happened and use git or install the official [github cli](https://cli.github.com/) , remember this tool was not designed to replace git in any way, it's just to make some extra time so you can do whatever you can do in 2s .
+
+<!-- errorsstop>
+<!-- errors -->
+
+# License
+
+Do whatever you want
+[MIT](LICENSE)
+
+<!-- errorsstop>
