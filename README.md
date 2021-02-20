@@ -18,15 +18,11 @@ create github repositories and automate git bash commands
 <!-- usage -->
 
 ```sh-session
-$ npm install -g mygit
+$ git clone https://github.com/QADA99/mygit.git
+$ cd mygit && npm install
+$ npm link #this will allow you to use mygit globaly
 $ mygit COMMAND
 running command...
-$ mygit (-v|--version|version)
-mygit/0.0.0 win32-x64 node-v14.15.1
-$ mygit --help [COMMAND]
-USAGE
-  $ mygit COMMAND
-...
 ```
 
 <!-- usagestop -->
@@ -35,26 +31,43 @@ USAGE
 
 <!-- commands -->
 
-- [`mygit config [FILE]`](#mygit-config-file)
-- [`mygit hello [FILE]`](#mygit-hello-file)
+- [`mygit config [PATH]`](#mygit-config-file)
+- [`mygit push [DIRECTORY] [MESSAGE]`](#mygit-push-file)
 - [`mygit help [COMMAND]`](#mygit-help-command)
-- [`mygit push [FILE]`](#mygit-push-file)
 
-## `mygit config [FILE]`
+## `mygit config [PATH]`
 
-describe the command here
+set the location of configuration file
 
 ```
 USAGE
-  $ mygit config [FILE]
+  $ mygit config [PATH]
 
 OPTIONS
-  -f, --force
+  -f, --force     f orce to change the configuration file path
   -h, --help       show CLI help
-  -n, --name=name  name to print
 ```
 
 _See code: [src/commands/config.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/config.ts)_
+
+## `mygit push [FILE]`
+
+Automate the process of pushing/creating the code to github repository
+
+```
+USAGE
+  $ mygit push [DIRECTORY] [MESSAGE]
+
+OPTIONS
+  -g, --gitignore  add gitignore
+  -h, --help       show CLI help
+  -l, --license    add license
+  -n, --name=name  change name of remote repository
+  -p, --public     create public repository
+  -r, --readme     add readme
+```
+
+_See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
 
 ## `mygit help [COMMAND]`
 
@@ -72,22 +85,5 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
-
-## `mygit push [FILE]`
-
-describe the command here
-
-```
-USAGE
-  $ mygit push [FILE]
-
-OPTIONS
-  -f, --force
-  -h, --help       show CLI help
-  -n, --name=name  name to print
-  -p, --public
-```
-
-_See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
 
 <!-- commandsstop -->

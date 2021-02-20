@@ -9,67 +9,92 @@ import Config from './config';
 import { GitService } from '../core/services/git.service';
 import { GithubService } from '../core/services/github.service';
 export default class Push extends Command {
-  static description = 'describe the command here'
+  static description = "Automate the process of pushing/creating the code to github repository"
 
   static flags = {
     help: flags.help({ char: 'h' }),
-    // flag with a value (-n, --name=VALUE)
+    public: flags.boolean({ char: 'p', description: 'create public repository' }),
     name: flags.string({ char: 'n', description: 'change name of remote repository' }),
-    // flag with no value (-f, --force)
-    force: flags.boolean({ char: 'f' }),
-    public: flags.boolean({ char: 'p' })
+    license: flags.boolean({ char: 'l', description: 'add license' }),
+    readme: flags.boolean({ char: 'r', description: 'add readme' }),
+    gitignore: flags.boolean({ char: 'g', description: 'add gitignore' })
   }
 
-  static args = [{ name: 'repository' }, { name: "message" }]
+  static args = [{ name: 'directory' }, { name: "message" }]
 
   async run() {
     const { args, flags } = this.parse(Push)
 
     const config: Configuration = FileUtil.readJsonFileSync(Config.readConfigFilePath());
     const git: GitService = GitService.getInstance();
-    /* if you're so lazy to give type . or directory 
-    but you want to add the commit message(second argumant),but make sure that's
-    the commit message doesn't conflict with any folder with the same name
+    /* if you're too lazy to type . or the name of the directory ,
+     you can add only the commit message(second argumant),but make sure that's
+    the commit message doesn't conflict with any directory with the same name
   */
-    if (!args.repository || (!FileUtil.exists(args.repository) && !args.message)) {
-
-      if (!FileUtil.exists(args.repository) && !args.message)
-        args.message = args.repository;
-      args.repository = '.';
+    if (!args.directory || (!FileUtil.exists(args.directory) && !args.message)) {
+      // decide if the first argumant is the directory or a commit message
+      if (!FileUtil.exists(args.directory) && !args.message)
+        args.message = args.directory;
+      args.directory = '.';
     }
+    // override configuruation with flags
+    if (flags.public)
+      config.always_private = false;
+    if (flags.gitignore)
+      config.always_add_gitignore = true;
+    if (flags.license)
+      config.always_add_license = true;
+    if (flags.readme)
+      config.always_add_readme = true;
+
     let project = new Project();
-    project.path = path.resolve(args.repository);
+    project.path = path.resolve(args.directory);
     project.commitMessage = args.message ?? config.default_commit_message;
+    project.IsPrivate = config.always_private;
     project.name = flags.name ?? path.basename(project.path);
     this.log(`project name: ${project.name} commit-message: ${project.commitMessage} path:${project.path}`)
+    let ready: boolean = await this.perpare(project, config)
+    if (ready)
+      git.push(project);
+
+  }
+  async perpare(project: Project, configuration: Configuration): Promise<boolean> {
+    let git = GitService.getInstance();
     if (!git.isInit(project))
-      this.log(git.init(project));
-    if (git.isClean(project))
-      this.warn("this repository is empty");
-    else {
-      this.log(git.add(project));
+      git.init(project);
+
+    // Add Readme and LICENSE ..
+    this.addFiles(project, configuration);
+
+    if (!git.isClean(project)) {
+      git.add(project);
       this.log(git.commit(project));
     }
     let remote = git.getRemote(project);
     if (StringUtil.isEmpty(remote)) {
-      project.isPushedBefore = false;
-      let github: GithubService = GithubService.getInstance();
-      if (!config.token) {
-        if (!config.username)
-          config.username = require("os").userInfo().username;
-        this.error('well what the hell I am supposed to do without your github token,' + config.username + " you ignorant slut");
-      } else {
-        project.remote_url = await github.createRepo(project, config.token);
-        this.log(git.addRemote(project));
+      let github = GithubService.getInstance();
+      if (!configuration.token) {
+        if (!configuration.username)
+          configuration.username = require("os").userInfo().username;
+        this.error('well what the hell I am supposed to do without your github token,'
+          + configuration.username + " you ignorant slut");
       }
+      project.remote_url = await github.createRepo(project, configuration.token);
+      if (!project.remote_url)
+        return false;
+      else
+        git.addRemote(project);
+    }
+    return true;
+  }
 
-    } else {
-      project.isPushedBefore = true;
-    }
-    if (project.remote_url || project.isPushedBefore)
-      this.log(git.push(project));
-    if (args.file && flags.force) {
-      this.log(`you input --force and --file: ${args.file}`)
-    }
+  addFiles(project: Project, configuration: Configuration) {
+    const resourcesPath = path.join(__dirname, "..", "resources");
+    if (configuration.always_add_readme && !FileUtil.existsInFolder(project.path, "README.md"))
+      FileUtil.createFile("README.md", "# " + project.name, project.path);
+    if (configuration.always_add_gitignore && !FileUtil.existsInFolder(project.path, ".gitignore"))
+      FileUtil.copy(path.join(resourcesPath, ".gitignore"), path.join(project.path, ".gitignore"));
+    if (configuration.always_add_license && !FileUtil.existsInFolder(project.path, "LICENSE"))
+      FileUtil.copy(path.join(resourcesPath, "LICENSE"), path.join(project.path, "LICENSE"));
   }
 }

@@ -40,7 +40,6 @@ export class GitService {
     }
     addRemote(project: Project): string {
         let commande: string = "cd " + project.path + " && git remote add " + project.remote + " " + project.remote_url;
-        console.log(commande);
         return child_process.execSync(commande).toString();
     }
     commit(project: Project) {

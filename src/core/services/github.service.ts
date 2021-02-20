@@ -20,7 +20,7 @@ export class GithubService {
         try {
             response = await octokit.request('POST /user/repos', {
                 name: project.name,
-                private: true
+                private: project.IsPrivate
             });
         } catch (ex) {
             console.log("error in creating repo in github");
