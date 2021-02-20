@@ -177,7 +177,7 @@ Example 5
 
 If no message provided . mygit will take the default commit message from configuration file.
 
-_See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/v0.0.0/src/commands/push.ts)_
+_See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/master/src/commands/push.ts)_
 
 ## `mygit help [COMMAND]`
 
@@ -194,7 +194,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/master/src/commands/help.ts)_
 
 <!-- commandsstop -->
 <!-- errors -->
