@@ -23,7 +23,8 @@ Create github repositories and Automate git bash commands from command line
 # Motivation
 
 Sometimes you just want to put your local directory in github without going to the browser .
-_"So me think why wast time do lot commands, when one command do trick"_
+
+> _"So me think why wast time do lot commands, when one command do trick"_ - kevin from the office
 
 <!-- motivationstop -->
 
@@ -69,7 +70,7 @@ running command...
 
 ## `mygit config [PATH]`
 
-Set the location of configuration file
+Set the location of the configuration file
 
 ```
 USAGE
@@ -80,7 +81,7 @@ OPTIONS
   -h, --help       show CLI help
 ```
 
-In order to put your project up on GitHub , you need to provide configuration file with your github Personal access tokens with at least public_repo scope or repo scope . Read more about github token and how to create one [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) .
+In order to put your project up on GitHub , you need to provide the configuration file with your github's Personal access tokens with at least public_repo scope or repo scope . Read more about github tokens and how to create one [here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) .
 
 Here's an example of a configuration file :
 
@@ -130,7 +131,7 @@ OPTIONS
   -r, --readme     add readme
 ```
 
-Both arguments ( DIRECTORY and MESSAGE ) could be optional .
+Both arguments ( DIRECTORY and MESSAGE ) are optional .
 
 ```
 Example 1
@@ -145,9 +146,9 @@ $ git add .
 $ git commit "intial commit"
 ```
 
-Afterwards mygit will check if git remote exists before push , if no will create a Repository in Github with the same name of your directory. the visibility of the new Repository will depends on your configuration and if you specify -p flag, -p stands for public.
+Afterwards mygit will check if git remote exists before push , if not it will create a Repository in Github with the same name of your directory. the visibility of the new Repository depends on your configuration and if you specified -p flag, -p stands for public.
 
-After that mygit will run git push . the sequence of those operations depends on your configuration and if you use flags (-r , -g , -l) .
+After that mygit will run git push . the sequence of those operations depend on your configuration and if you used flags (-r , -g , -l) .
 
 ```
 Example 2
@@ -161,7 +162,7 @@ Example 3
   $ mygit push 'initial commit'
 ```
 
-In this example mygit will take the current directory as the working directory. but make sure that there's no directory with name of your message . otherwise it will be taken as the working directory and the commit message will be the default message.
+In this example mygit will take the current directory as the working directory. but make sure that there's no directory with the name of your message . otherwise it will be taken as the working directory and the commit message will be the default message.
 
 ```
 Example 4
@@ -175,7 +176,7 @@ Example 5
   $ mygit push my-directory
 ```
 
-If no message provided . mygit will take the default commit message from configuration file.
+If no message is provided . mygit will take the default commit message from the configuration file.
 
 _See code: [src/commands/push.ts](https://github.com/QADA99/mygit/blob/master/src/commands/push.ts)_
 
@@ -201,7 +202,7 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/master
 
 # Errors
 
-If something goes wrong just try to pretend like none of it happened and use git or install the official [github cli](https://cli.github.com/) , remember this tool was not designed to replace git in any way, it's just to make some extra time so you can do whatever you can do in 2s .
+If something goes wrong just try to pretend like none of it happened and use git or install the official [github cli](https://cli.github.com/) , remember this tool was not designed to replace git in any way, it's just to gain some extra time so you can do whatever you can do in 2 seconds .
 
 <!-- errorsstop>
 <!-- errors -->
@@ -209,6 +210,7 @@ If something goes wrong just try to pretend like none of it happened and use git
 # License
 
 Do whatever you want
+
 [MIT](LICENSE)
 
 <!-- errorsstop>
