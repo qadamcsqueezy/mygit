@@ -8,7 +8,7 @@ export function readJsonFileSync(path: string): any {
 export function createFile(name: string, content: string, parent: string) {
     fs.writeFileSync(path.join(parent, name), content);
 }
-export function existsInFolder(filename: string, parent: string): boolean {
+export function existsInFolder(parent: string, filename: string): boolean {
     return fs.existsSync(path.join(parent, filename));
 }
 export function exists(path: string): boolean {
