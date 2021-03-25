@@ -89,7 +89,7 @@ Here's an example of a configuration file :
 {
   "token": "Put your token here",
   "username": "QADA99",
-  "IsPrivate": true,
+  "always_private": true,
   "default_commit_message": "pippity poppity give me the zoppity",
   "always_add_readme": true,
   "always_add_license": false,
